@@ -19,29 +19,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "GKPlayer/GKLyricsTableViewCell.m"
-            timestampString = "453374873.975486"
+            filePath = "GKPlayer/GKLyricAnimationManager.m"
+            timestampString = "456294895.784905"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "85"
-            endingLineNumber = "85"
-            landmarkName = "-configCellWithLyric:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "GKPlayer/GKLyricsTableViewCell.m"
-            timestampString = "453376791.908139"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
-            landmarkName = "-configCellWithLyric:"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
+            landmarkName = "-addAnimationToView:withDuration:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

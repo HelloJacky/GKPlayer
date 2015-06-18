@@ -10,107 +10,31 @@
 
 @interface GKLyricsView() <UITableViewDataSource, UITableViewDelegate>
 
+@property (nonatomic, strong) NSString *lyricsFile;
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) dispatch_source_t timer;
+@property (nonatomic, assign) BOOL isTimerRunning;
+
 @end
 
-@implementation GKLyricsView{
-    NSString *_lyricsFile;
-    
-    UITableView *_tableView;
-    
-    dispatch_source_t _timer;
-    BOOL _isTimerRunning;
-    
-}
+@implementation GKLyricsView
 
 - (instancetype)initWithFrame:(CGRect)frame{
     if(self = [super initWithFrame:frame]){
-        [self setupView];
+        [self addSubview:self.tableView];
     }
     return self;
 }
 
-#pragma mark -- Setup
-- (void)setupView{
-    _tableView = [[UITableView alloc] initWithFrame:self.frame];
-    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _tableView.dataSource = self;
-    _tableView.delegate = self;
-    [self addSubview:_tableView];
-    
-}
-
-- (void)setupTimer{
-    uint64_t interval = 7 * NSEC_PER_SEC;
-    dispatch_queue_t queue = dispatch_queue_create("com.gkplayer.timer", NULL);
-    _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
-    dispatch_source_set_timer(_timer, dispatch_time(DISPATCH_TIME_NOW, 0), interval, 0);
-    dispatch_source_set_event_handler(_timer, ^{
-        
-    });
-}
-
-- (void)startTimer{
-    if (!_isTimerRunning) {
-        _isTimerRunning = YES;
-        dispatch_resume(_timer);
-        NSLog(@"开始播放");
-    }
-    
-}
-
-- (void)stopTimer{
-    if (_isTimerRunning) {
-        _isTimerRunning = NO;
-        dispatch_suspend(_timer);
-        NSLog(@"停止播放");
-    }
-    
-}
-
-#pragma mark -- Setters
-//- (void)setLyricFile:(NSString *)path{
-//    _lyricsFile = [path copy];
-//}
-
-
-#pragma mark -- UITableView DataSource Methods
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return _lyricsList.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *cellIdetifier = @"LyricsCell";
-    GKLyricsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdetifier];
-    if (!cell) {
-        cell = [[GKLyricsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdetifier];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    }
-    
-    GKLyric *lyrics = _lyricsList[indexPath.row];
-    [cell configCellWithLyric:lyrics];
-    
-    return cell;
-}
-
-#pragma mark -- UITableView Delegate Methods
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 44.f;
-}
-
-
 #pragma mark -- Lyrics File Handle Methods
+
 - (void)loadLyricsFile:(NSString *)path{
     _lyricsList = [NSMutableArray array];
     _lyricsFile = [path copy];
     NSError *error;
     NSString *lyricsString = [[NSString alloc] initWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
     [self handleLyricsString:lyricsString];
-    [_tableView reloadData];
+    [self.tableView reloadData];
 }
 
 - (void)handleLyricsString:(NSString *)lyricsString{
@@ -118,11 +42,11 @@
     NSString *timeRegexStr = @"^\\[\\d+:\\d+.\\d+\\]";
     for (NSString *line in lineList) {
         NSRegularExpression *timeReg = [NSRegularExpression regularExpressionWithPattern:timeRegexStr
-                                                                                    options:NSRegularExpressionCaseInsensitive
-                                                                                      error:nil];
+                                                                                 options:NSRegularExpressionCaseInsensitive
+                                                                                   error:nil];
         NSArray *timeMatches = [timeReg matchesInString:line
-                                                      options:0
-                                                        range:NSMakeRange(0, [line length])];
+                                                options:0
+                                                  range:NSMakeRange(0, [line length])];
         
         if (timeMatches.count > 0) {
             NSTextCheckingResult *result = [timeMatches lastObject];
@@ -144,8 +68,6 @@
         }
     }
     [self filterInvalidLyrics:_lyricsList];
-    
-//    [_lyricsList removeObjectsInRange:NSMakeRange(1, _lyricsList.count - 1)];
 }
 
 - (void)filterInvalidLyrics:(NSMutableArray *)list{
@@ -168,8 +90,51 @@
     NSString *milliSecondStr = [str substringWithRange:NSMakeRange(7, 2)];
     
     NSInteger totleMilliSecond = [minuteStr integerValue] * 60 * 1000 + [secondStr integerValue] * 1000 + [milliSecondStr integerValue];
-
+    
     return totleMilliSecond;
+}
+
+#pragma mark -- UITableView DataSource Methods
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return _lyricsList.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSString *cellIdetifier = [NSString stringWithFormat:@"LyricsCell_%ld",(long)indexPath.row];
+    GKLyricsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdetifier];
+    if (!cell) {
+        cell = [[GKLyricsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdetifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
+    
+    GKLyric *lyrics = _lyricsList[indexPath.row];
+    [cell configCellWithLyric:lyrics];
+    
+    return cell;
+}
+
+#pragma mark -- UITableView Delegate Methods
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 44.f;
+}
+
+#pragma mark -- Setters And Getters
+
+- (UITableView *)tableView{
+    if (_tableView == nil) {
+        _tableView = [[UITableView alloc] initWithFrame:self.frame];
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        _tableView.dataSource = self;
+        _tableView.delegate = self;
+    }
+    
+    return _tableView;
 }
 
 @end

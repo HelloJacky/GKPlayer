@@ -7,18 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "GKLyric.h"
 
 @interface GKLyricLineView : UIView
 
-- (void)startAnimation;
+@property (nonatomic, strong) UILabel *whiteLineLabel;
+@property (nonatomic, strong) UILabel *colorLineLabel;
+
+- (instancetype)initWithAnimationColor:(UIColor *)color;
+
+- (void)setLineText:(NSString *)text;
+
+- (void)startAnimationWithDuration:(CFTimeInterval)duration;
 
 - (void)pauseAnimation;
 
-- (void)removeAnimation;
+- (void)resumeAnimation;
 
-- (void)setLyricText:(NSString *)text
-        withDuration:(double)duration
-   andPlayedDuration:(double)playedDuration;
+- (void)removeAnimation;
 
 @end

@@ -10,116 +10,90 @@
 #import "GKLyricLineView.h"
 #import "GKPlayerDefine.h"
 
-#define kLabelHeight 20.f
+@interface GKLyricsTableViewCell()
 
-@implementation GKLyricsTableViewCell{
-    GKLyric *_lyric;
-    GKLyricLineView *_lyricLineView;
-}
+@property (nonatomic, strong) GKLyric *lyric;
+@property (nonatomic, strong) GKLyricLineView *lyricLineView;
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
+@end
+
+@implementation GKLyricsTableViewCell
+
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         self.contentView.backgroundColor = [UIColor lightGrayColor];
-        _lyricLineView = [[GKLyricLineView alloc] init];
-//        _lyricsLabel.layer.borderWidth = 1.f;
-        [self.contentView addSubview:_lyricLineView];
+        [self.contentView addSubview:self.lyricLineView];
         
-        [_lyricLineView setTranslatesAutoresizingMaskIntoConstraints:NO];
-        NSDictionary *bindings = NSDictionaryOfVariableBindings(_lyricLineView);
-        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.contentView
-                                                                     attribute:NSLayoutAttributeCenterX
-                                                                     relatedBy:NSLayoutRelationEqual
-                                                                        toItem:_lyricLineView
-                                                                     attribute:NSLayoutAttributeCenterX
-                                                                    multiplier:1
-                                                                      constant:0]];
-        [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.contentView
-                                                                     attribute:NSLayoutAttributeCenterY
-                                                                     relatedBy:NSLayoutRelationEqual
-                                                                        toItem:_lyricLineView
-                                                                     attribute:NSLayoutAttributeCenterY
-                                                                    multiplier:1
-                                                                      constant:0]];
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-(>=0)-[_lyricLineView]-(>=0)-|"
-                                                                                 options:NSLayoutFormatAlignAllLeft
-                                                                                 metrics:nil
-                                                                                   views:bindings]];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePlayNotification:) name:kNOTIFICATION_PLAYER_PLAY object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePauseNotification:) name:kNOTIFICATION_PLAYER_PAUSEL object:nil];
         
-//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePlayNotification:) name:kNOTIFICATION_SHOWLYRICS object:nil];
+        [self setupConstraints];
     }
-    
     return self;
-}
-
-
-
-- (void)prepareForReuse{
-    [super prepareForReuse];
-    _lyric = nil;
-    [_lyricLineView removeAnimation];
-    [_lyric removeObserver:self forKeyPath:@"isPausing"];
-    [_lyric removeObserver:self forKeyPath:@"isPlaying"];
 }
 
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)layoutSubviews{
-    [super layoutSubviews];
-    [_lyricLineView layoutIfNeeded];
+#pragma mark -- Layout
+
+- (void)setupConstraints{
+    [self.lyricLineView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    NSDictionary *bindings = NSDictionaryOfVariableBindings(_lyricLineView);
+    
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.contentView
+                                                                 attribute:NSLayoutAttributeCenterX
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:self.lyricLineView
+                                                                 attribute:NSLayoutAttributeCenterX
+                                                                multiplier:1
+                                                                  constant:0]];
+    
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.contentView
+                                                                 attribute:NSLayoutAttributeCenterY
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:self.lyricLineView
+                                                                 attribute:NSLayoutAttributeCenterY
+                                                                multiplier:1
+                                                                  constant:0]];
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-(>=0)-[_lyricLineView]-(>=0)-|"
+                                                                             options:NSLayoutFormatAlignAllLeft
+                                                                             metrics:nil
+                                                                               views:bindings]];
 }
+
+#pragma mark -- Config Method
 
 - (void)configCellWithLyric:(GKLyric *)lyric{
-    _lyric = lyric;
-    double playedDuration = 0;
-    if (lyric.isPausing || lyric.isPlaying) {
-        playedDuration  = _lyric.currentPlayTime - _lyric.playTime;
-    }
-    
-    [_lyricLineView  setLyricText:lyric.text
-                     withDuration:_lyric.playDuration
-                andPlayedDuration:playedDuration];
-    
-    if (_lyric.isPlaying && !_lyric.isPausing) {
-        [_lyricLineView startAnimation];
-    }
-    
-    [_lyric addObserver:self
-             forKeyPath:@"isPausing"
-                options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld
-                context:NULL];
-    
-    [_lyric addObserver:self
-             forKeyPath:@"isPlaying"
-                options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld
-                context:NULL];
+    self.lyric = lyric;
+    [self.lyricLineView setLineText:lyric.text];
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
-    if ([keyPath isEqualToString:@"isPausing"]) {
-        if (_lyric.isPausing) {
-            [_lyricLineView pauseAnimation];
-        }else{
-            [_lyricLineView startAnimation];
-        }
-    }
-    
-    if ([keyPath isEqualToString:@"isPlaying"]) {
-        if (_lyric.isPlaying && !_lyric.isPausing) {
-            [_lyricLineView startAnimation];
-        }
+#pragma mark -- Notification Methods
+
+- (void)handlePlayNotification:(NSNotification *)notification{
+    GKLyric *handleLyric = notification.object;
+    if (handleLyric.playTime == self.lyric.playTime) {
+        [self.lyricLineView startAnimationWithDuration:self.lyric.playDuration];
     }
 }
 
+- (void)handlePauseNotification:(NSNotification *)notification{
+    GKLyric *handleLyric = notification.object;
+    if (handleLyric.playTime == self.lyric.playTime) {
+        [self.lyricLineView pauseAnimation];
+    }
+}
 
+#pragma mark -- Setters And Getters
 
-//- (void)handlePlayNotification:(NSNotification *)notif{
-//    GKLyric *lyric = notif.object;
-//    if (lyric.playTime == _lyric.playTime) {
-//        [_lyricLineView startAnimationWithDuration:_lyric.playInterval/1000];
-//    }
-//}
-
+- (GKLyricLineView *)lyricLineView{
+    if (_lyricLineView == nil) {
+        _lyricLineView = [[GKLyricLineView alloc] init];
+    }
+    return _lyricLineView;
+}
 
 @end

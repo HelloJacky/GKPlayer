@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "GKLyric.h"
-#import "GKPlayer.h"
 
 @interface GKLyricsTableViewCell : UITableViewCell
 

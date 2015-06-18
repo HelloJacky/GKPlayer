@@ -8,171 +8,151 @@
 
 #import "GKLyricLineView.h"
 
-@implementation GKLyricLineView{
-    UILabel *_whiteLabel;
-    UILabel *_greenLabel;
-    CALayer *_greenMaskLayer;
-    
-    double _duration;        //播放的总时长
-    double _playedDuration;  //已经播放的时长
-    
-    BOOL _isPausing;        //当前是否处于暂停状态
-//    GKLyric *_lyric;
-}
+@interface GKLyricLineView()
 
-- (id)init{
+@property (nonatomic, strong) CALayer *maskLayer;
+@property (nonatomic, assign) BOOL isAnimationPausing;
+
+@end
+
+@implementation GKLyricLineView
+
+- (instancetype)init{
     self = [super init];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
-        
-        _whiteLabel = [[UILabel alloc] init];
-        _whiteLabel.backgroundColor = [UIColor clearColor];
-        _whiteLabel.textColor = [UIColor whiteColor];
-        [self addSubview:_whiteLabel];
-        
-        _greenLabel = [[UILabel alloc] init];
-        _greenLabel.backgroundColor = [UIColor clearColor];
-        _greenLabel.textColor = [UIColor greenColor];
-        [self addSubview:_greenLabel];
-        
-        _greenMaskLayer = [CALayer layer];
-        _greenMaskLayer.backgroundColor = [UIColor blackColor].CGColor;
-        _greenMaskLayer.anchorPoint = CGPointZero;
-        _greenLabel.layer.mask = _greenMaskLayer;
-//        _greenLabel.layer.borderWidth = 1.f;
-        
+        [self addSubview:self.whiteLineLabel];
+        [self addSubview:self.colorLineLabel];
+        //设置默认颜色为绿色
+        self.colorLineLabel.textColor = [UIColor greenColor];
         [self setupConstraints];
     }
     return self;
 }
 
-
-- (void)setupConstraints{
-    [_greenLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [_whiteLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-    
-    NSDictionary *bindings = NSDictionaryOfVariableBindings(_greenLabel, _whiteLabel);
-    
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_whiteLabel]|"
-                                                                 options:NSLayoutFormatAlignAllLeft
-                                                                 metrics:nil
-                                                                   views:bindings]];
-    
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_whiteLabel]|"
-                                                                 options:NSLayoutFormatAlignAllLeft
-                                                                 metrics:nil
-                                                                   views:bindings]];
-    
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_greenLabel]|"
-                                                                 options:NSLayoutFormatAlignAllLeft
-                                                                 metrics:nil
-                                                                   views:bindings]];
-    
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_greenLabel]|"
-                                                                 options:NSLayoutFormatAlignAllLeft
-                                                                 metrics:nil
-                                                                   views:bindings]];
-    
-}
-
-
-
-- (void)setLyricText:(NSString *)text withDuration:(double)duration andPlayedDuration:(double)playedDuration{
-    [self removeAnimation];
-    _whiteLabel.text = text;
-    _greenLabel.text = text;
-    _duration = duration;
-    _playedDuration = playedDuration;
-    
-    _greenMaskLayer.speed = 1.0;
-    _greenMaskLayer.timeOffset = 0.0;
-    _greenMaskLayer.beginTime = 0.0;
-//    _greenMaskLayer.frame = CGRectZero;
-    
-    _isPausing = NO;
-    
-    [self setNeedsDisplay];
+- (instancetype)initWithAnimationColor:(UIColor *)color{
+    self = [self init];
+    if (self) {
+        self.colorLineLabel.textColor = color;
+    }
+    return self;
 }
 
 - (void)drawRect:(CGRect)rect{
     [super drawRect:rect];
-    
-    if (_playedDuration != 0) {
-        //求出已播放时间占比
-        double playedProportion = _playedDuration / _duration;
-        
-        _duration -= _playedDuration;
-        
-        _greenMaskLayer.frame = CGRectOffset(_greenLabel.frame,
-                                             -_greenLabel.frame.size.width * (1- playedProportion),
-                                             0);
-    }else{
-        _greenMaskLayer.frame = CGRectOffset(_greenLabel.frame,
-                                             -_greenLabel.frame.size.width,
-                                             0);
-    }
-    
+    _maskLayer.frame = CGRectOffset(self.colorLineLabel.frame, -self.colorLineLabel.frame.size.width, 0);
 }
 
+#pragma mark -- Animation Methods
 
-- (void)startAnimation{
-    if (_isPausing) {
+- (void)startAnimationWithDuration:(CFTimeInterval)duration{
+    NSLog(@"[动画开始]%@",self.whiteLineLabel.text);
+    if (self.isAnimationPausing) {
+        NSLog(@"动画正在暂停中");
         [self resumeAnimation];
         return;
     }
     
-//    NSMutableArray *keyTimes = [NSMutableArray arrayWithArray:@[@0.1,@0.2,@0.3,@0.4,@0.5,@0.6,@0.7,@0.8,@0.9,@1]];
-    
-//    CGFloat wordWidth = self.frame.size.width/_greenLabel.text.length;
     NSMutableArray *values = [NSMutableArray array];
     
-//    for (int i = 0; i <= _greenLabel.text.length; i++) {
-//        CGPoint p = CGPointMake(-(self.frame.size.width - i*wordWidth), 0);
-//        [values addObject:[NSValue valueWithCGPoint:p]];
-//    }
-    [values addObject:[NSValue valueWithCGPoint:CGPointMake(_greenMaskLayer.frame.origin.x, 0)]];
+    [values addObject:[NSValue valueWithCGPoint:CGPointMake(self.maskLayer.frame.origin.x, 0)]];
     [values addObject:[NSValue valueWithCGPoint:CGPointMake(0, 0)]];
     
     CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
-    //    animation.beginTime = CACurrentMediaTime() + _lyrics.playTime/1000;
-//    animation.keyTimes = keyTimes;
     animation.values = values;
-    animation.duration = _duration/1000;
+    animation.duration = duration/1000;
     animation.calculationMode = kCAAnimationLinear;
     animation.fillMode = kCAFillModeForwards;
     animation.removedOnCompletion = YES;
-    animation.delegate = self;
-    [_greenMaskLayer addAnimation:animation forKey:@"MaskAnimation"];
+    [self.maskLayer addAnimation:animation forKey:@"MaskAnimation"];
 }
-
-- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag{
-    //动画结束后，回复leyer的初始位置
-    if (flag) {
-        _greenMaskLayer.frame = CGRectMake(-1000, 0, 0, 0);
-    }
-
-}
-
 
 - (void)pauseAnimation{
-    CFTimeInterval pausedTime = [_greenMaskLayer convertTime:CACurrentMediaTime() fromLayer:nil];
-    _greenMaskLayer.speed = 0.0;
-    _greenMaskLayer.timeOffset = pausedTime;
-    _isPausing = YES;
+    NSLog(@"[动画暂停]%@",self.whiteLineLabel.text);
+    CFTimeInterval pausedTime = [self.maskLayer convertTime:CACurrentMediaTime() fromLayer:nil];
+    self.maskLayer.speed = 0.0;
+    self.maskLayer.timeOffset = pausedTime;
+    self.isAnimationPausing = YES;
 }
 
--(void)resumeAnimation{
-    CFTimeInterval pausedTime = [_greenMaskLayer timeOffset];
-    _greenMaskLayer.speed = 1.0;
-    _greenMaskLayer.timeOffset = 0.0;
-//    _greenMaskLayer.beginTime = 0.0;
-    CFTimeInterval timeSincePause = [_greenMaskLayer convertTime:CACurrentMediaTime() fromLayer:nil] - pausedTime;
-    _greenMaskLayer.beginTime = timeSincePause;
+- (void)resumeAnimation{
+    NSLog(@"[动画恢复启动]%@",self.whiteLineLabel.text);
+    CFTimeInterval pausedTime = [self.maskLayer timeOffset];
+    self.maskLayer.speed = 1.0;
+    self.maskLayer.timeOffset = 0.0;
+    CFTimeInterval timeSincePause = [self.maskLayer convertTime:CACurrentMediaTime() fromLayer:nil] - pausedTime;
+    self.maskLayer.beginTime = timeSincePause;
+    self.isAnimationPausing = NO;
 }
 
 - (void)removeAnimation{
-    [_greenMaskLayer removeAnimationForKey:@"MaskAnimation"];
-    _greenMaskLayer.frame = CGRectMake(-1000, 0, 0, 0);
+    NSLog(@"[动画移除]%@",self.whiteLineLabel.text);
+    [self.maskLayer removeAnimationForKey:@"MaskAnimation"];
+}
+
+#pragma mark -- Layout
+
+- (void)setupConstraints{
+    [self.colorLineLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self.whiteLineLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
+    NSDictionary *bindings = NSDictionaryOfVariableBindings(_colorLineLabel, _whiteLineLabel);
+    
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_whiteLineLabel]|"
+                                                                 options:NSLayoutFormatAlignAllLeft
+                                                                 metrics:nil
+                                                                   views:bindings]];
+    
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_whiteLineLabel]|"
+                                                                 options:NSLayoutFormatAlignAllLeft
+                                                                 metrics:nil
+                                                                   views:bindings]];
+    
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_colorLineLabel]|"
+                                                                 options:NSLayoutFormatAlignAllLeft
+                                                                 metrics:nil
+                                                                   views:bindings]];
+    
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_colorLineLabel]|"
+                                                                 options:NSLayoutFormatAlignAllLeft
+                                                                 metrics:nil
+                                                                   views:bindings]];
+    
+}
+
+#pragma mark -- Setters And Getters
+
+- (UILabel *)whiteLineLabel{
+    if (_whiteLineLabel == nil) {
+        _whiteLineLabel = [[UILabel alloc] init];
+        _whiteLineLabel.backgroundColor = [UIColor clearColor];
+        _whiteLineLabel.textColor = [UIColor whiteColor];
+    }
+    
+    return _whiteLineLabel;
+}
+
+- (UILabel *)colorLineLabel{
+    if (_colorLineLabel == nil) {
+        _colorLineLabel = [[UILabel alloc] init];
+        _colorLineLabel.backgroundColor = [UIColor clearColor];
+        _colorLineLabel.layer.mask = self.maskLayer;
+    }
+    return _colorLineLabel;
+}
+
+- (CALayer *)maskLayer{
+    if (_maskLayer == nil) {
+        _maskLayer = [CALayer layer];
+        _maskLayer.backgroundColor = [UIColor blackColor].CGColor;
+        _maskLayer.anchorPoint = CGPointZero;
+    }
+    return _maskLayer;
+}
+
+- (void)setLineText:(NSString *)text{
+    self.whiteLineLabel.text = text;
+    self.colorLineLabel.text = text;
 }
 
 
