@@ -13,10 +13,12 @@
 
 //#define kNOTIFICATION_SHOWLYRICS    @"ShowLyrics"
 
-#define kNOTIFICATION_PLAYER_PLAY      @"PlayerPlay"
+#define kNOTIFICATION_PLAYER_PLAY       @"PlayerPlay"
 
-#define kNOTIFICATION_PLAYER_PAUSEL    @"PlayerPause"
+#define kNOTIFICATION_PLAYER_PAUSEL     @"PlayerPause"
 
-#define kNOTIFICATION_PLAYER_STOP      @"PlayerStop"
+#define kNOTIFICATION_PLAYER_STOP       @"PlayerStop"
+
+#define KCOLOR_DEFAULT                  UIColorFrom16RGBA(0Xf1c40f, 1.0)
 
 #endif

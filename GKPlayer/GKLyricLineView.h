@@ -10,8 +10,7 @@
 
 @interface GKLyricLineView : UIView
 
-@property (nonatomic, strong) UILabel *whiteLineLabel;
-@property (nonatomic, strong) UILabel *colorLineLabel;
+
 
 - (instancetype)initWithAnimationColor:(UIColor *)color;
 

@@ -21,7 +21,8 @@
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        self.contentView.backgroundColor = [UIColor lightGrayColor];
+//        self.contentView.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:self.lyricLineView];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePlayNotification:) name:kNOTIFICATION_PLAYER_PLAY object:nil];

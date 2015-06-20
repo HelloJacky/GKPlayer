@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C5B01A95541F0477E59036B /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5CA1968D063CC3D0974CFD3 /* libPods.a */; };
+		9D19AC271B32BE60007BB28F /* Immortals.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 9D19AC261B32BE60007BB28F /* Immortals.mp3 */; };
+		9D19AC291B32BE71007BB28F /* Immortals.lrc in Resources */ = {isa = PBXBuildFile; fileRef = 9D19AC281B32BE71007BB28F /* Immortals.lrc */; };
+		9D19AC311B3411DA007BB28F /* GKSong.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D19AC301B3411DA007BB28F /* GKSong.m */; };
+		9D19AC341B34130A007BB28F /* GKPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D19AC331B34130A007BB28F /* GKPlayerManager.m */; };
 		9D4DDA941AFA0ECC002C6F40 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4DDA931AFA0ECC002C6F40 /* main.m */; };
 		9D4DDA971AFA0ECC002C6F40 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4DDA961AFA0ECC002C6F40 /* AppDelegate.m */; };
 		9D4DDA9A1AFA0ECC002C6F40 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4DDA991AFA0ECC002C6F40 /* ViewController.m */; };
@@ -14,11 +19,10 @@
 		9D4DDA9F1AFA0ECC002C6F40 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9D4DDA9E1AFA0ECC002C6F40 /* Images.xcassets */; };
 		9D4DDAA21AFA0ECC002C6F40 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D4DDAA01AFA0ECC002C6F40 /* LaunchScreen.xib */; };
 		9D4DDAAE1AFA0ECC002C6F40 /* GKPlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4DDAAD1AFA0ECC002C6F40 /* GKPlayerTests.m */; };
-		9D4DDAB91AFA0F59002C6F40 /* GKLyricsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4DDAB81AFA0F59002C6F40 /* GKLyricsView.m */; };
 		9D4DDABC1AFA1519002C6F40 /* GKLyricsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4DDABB1AFA1519002C6F40 /* GKLyricsTableViewCell.m */; };
 		9D4DDAC21AFA17AD002C6F40 /* GKLyricLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4DDAC11AFA17AD002C6F40 /* GKLyricLineView.m */; };
 		9D4DDAC51AFA1C4A002C6F40 /* GKLyric.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D4DDAC41AFA1C4A002C6F40 /* GKLyric.m */; };
-		9DB0F2A71B00722400AADAB3 /* 李克勤 - 月半夜小夜曲.lrc in Resources */ = {isa = PBXBuildFile; fileRef = 9DB0F2A61B00722400AADAB3 /* 李克勤 - 月半夜小夜曲.lrc */; };
+		9DB0F2A71B00722400AADAB3 /* 月半小夜曲.lrc in Resources */ = {isa = PBXBuildFile; fileRef = 9DB0F2A61B00722400AADAB3 /* 月半小夜曲.lrc */; };
 		9DB0F2AA1B01D6F000AADAB3 /* GKPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DB0F2A91B01D6F000AADAB3 /* GKPlayer.m */; };
 		9DEB61AA1B04827B00A763AB /* 月半小夜曲.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 9DEB61A91B04827B00A763AB /* 月半小夜曲.mp3 */; };
 /* End PBXBuildFile section */
@@ -34,6 +38,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		37A66AAF0C36EEA5DED17E30 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		9D19AC261B32BE60007BB28F /* Immortals.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Immortals.mp3; sourceTree = "<group>"; };
+		9D19AC281B32BE71007BB28F /* Immortals.lrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Immortals.lrc; sourceTree = "<group>"; };
+		9D19AC2F1B3411DA007BB28F /* GKSong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKSong.h; sourceTree = "<group>"; };
+		9D19AC301B3411DA007BB28F /* GKSong.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKSong.m; sourceTree = "<group>"; };
+		9D19AC321B34130A007BB28F /* GKPlayerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKPlayerManager.h; sourceTree = "<group>"; };
+		9D19AC331B34130A007BB28F /* GKPlayerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKPlayerManager.m; sourceTree = "<group>"; };
 		9D4DDA8E1AFA0ECC002C6F40 /* GKPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GKPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D4DDA921AFA0ECC002C6F40 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9D4DDA931AFA0ECC002C6F40 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -47,19 +58,19 @@
 		9D4DDAA71AFA0ECC002C6F40 /* GKPlayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GKPlayerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D4DDAAC1AFA0ECC002C6F40 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9D4DDAAD1AFA0ECC002C6F40 /* GKPlayerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GKPlayerTests.m; sourceTree = "<group>"; };
-		9D4DDAB71AFA0F59002C6F40 /* GKLyricsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKLyricsView.h; sourceTree = "<group>"; };
-		9D4DDAB81AFA0F59002C6F40 /* GKLyricsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKLyricsView.m; sourceTree = "<group>"; };
 		9D4DDABA1AFA1519002C6F40 /* GKLyricsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKLyricsTableViewCell.h; sourceTree = "<group>"; };
 		9D4DDABB1AFA1519002C6F40 /* GKLyricsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKLyricsTableViewCell.m; sourceTree = "<group>"; };
 		9D4DDAC01AFA17AD002C6F40 /* GKLyricLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKLyricLineView.h; sourceTree = "<group>"; };
 		9D4DDAC11AFA17AD002C6F40 /* GKLyricLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKLyricLineView.m; sourceTree = "<group>"; };
 		9D4DDAC31AFA1C4A002C6F40 /* GKLyric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKLyric.h; sourceTree = "<group>"; };
 		9D4DDAC41AFA1C4A002C6F40 /* GKLyric.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKLyric.m; sourceTree = "<group>"; };
-		9DB0F2A61B00722400AADAB3 /* 李克勤 - 月半夜小夜曲.lrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "李克勤 - 月半夜小夜曲.lrc"; sourceTree = "<group>"; };
+		9DB0F2A61B00722400AADAB3 /* 月半小夜曲.lrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "月半小夜曲.lrc"; sourceTree = "<group>"; };
 		9DB0F2A81B01D6F000AADAB3 /* GKPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKPlayer.h; sourceTree = "<group>"; };
 		9DB0F2A91B01D6F000AADAB3 /* GKPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKPlayer.m; sourceTree = "<group>"; };
 		9DEB61A91B04827B00A763AB /* 月半小夜曲.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "月半小夜曲.mp3"; sourceTree = "<group>"; };
 		9DEB61AC1B04A74500A763AB /* GKPlayerDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GKPlayerDefine.h; sourceTree = "<group>"; };
+		B5CA1968D063CC3D0974CFD3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F099CB4D5A519F7620C011A6 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C5B01A95541F0477E59036B /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,12 +92,51 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7FB714134B228FD01DB0C80E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B5CA1968D063CC3D0974CFD3 /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		95337BAB61A0F19EECB8CCC8 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				37A66AAF0C36EEA5DED17E30 /* Pods.debug.xcconfig */,
+				F099CB4D5A519F7620C011A6 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		9D19AC2E1B332BF2007BB28F /* GKPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				9DB0F2A81B01D6F000AADAB3 /* GKPlayer.h */,
+				9DB0F2A91B01D6F000AADAB3 /* GKPlayer.m */,
+				9D19AC321B34130A007BB28F /* GKPlayerManager.h */,
+				9D19AC331B34130A007BB28F /* GKPlayerManager.m */,
+				9D4DDABA1AFA1519002C6F40 /* GKLyricsTableViewCell.h */,
+				9D4DDABB1AFA1519002C6F40 /* GKLyricsTableViewCell.m */,
+				9D4DDAC01AFA17AD002C6F40 /* GKLyricLineView.h */,
+				9D4DDAC11AFA17AD002C6F40 /* GKLyricLineView.m */,
+				9D19AC2F1B3411DA007BB28F /* GKSong.h */,
+				9D19AC301B3411DA007BB28F /* GKSong.m */,
+				9D4DDAC31AFA1C4A002C6F40 /* GKLyric.h */,
+				9D4DDAC41AFA1C4A002C6F40 /* GKLyric.m */,
+				9DEB61AC1B04A74500A763AB /* GKPlayerDefine.h */,
+			);
+			name = GKPlayer;
+			sourceTree = "<group>";
+		};
 		9D4DDA851AFA0ECC002C6F40 = {
 			isa = PBXGroup;
 			children = (
 				9D4DDA901AFA0ECC002C6F40 /* GKPlayer */,
 				9D4DDAAA1AFA0ECC002C6F40 /* GKPlayerTests */,
 				9D4DDA8F1AFA0ECC002C6F40 /* Products */,
+				95337BAB61A0F19EECB8CCC8 /* Pods */,
+				7FB714134B228FD01DB0C80E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -101,6 +152,7 @@
 		9D4DDA901AFA0ECC002C6F40 /* GKPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				9D19AC2E1B332BF2007BB28F /* GKPlayer */,
 				9D4DDA951AFA0ECC002C6F40 /* AppDelegate.h */,
 				9D4DDA961AFA0ECC002C6F40 /* AppDelegate.m */,
 				9D4DDA981AFA0ECC002C6F40 /* ViewController.h */,
@@ -109,17 +161,6 @@
 				9D4DDA9E1AFA0ECC002C6F40 /* Images.xcassets */,
 				9D4DDAA01AFA0ECC002C6F40 /* LaunchScreen.xib */,
 				9D4DDA911AFA0ECC002C6F40 /* Supporting Files */,
-				9DB0F2A81B01D6F000AADAB3 /* GKPlayer.h */,
-				9DB0F2A91B01D6F000AADAB3 /* GKPlayer.m */,
-				9D4DDAB71AFA0F59002C6F40 /* GKLyricsView.h */,
-				9D4DDAB81AFA0F59002C6F40 /* GKLyricsView.m */,
-				9D4DDABA1AFA1519002C6F40 /* GKLyricsTableViewCell.h */,
-				9D4DDABB1AFA1519002C6F40 /* GKLyricsTableViewCell.m */,
-				9D4DDAC01AFA17AD002C6F40 /* GKLyricLineView.h */,
-				9D4DDAC11AFA17AD002C6F40 /* GKLyricLineView.m */,
-				9D4DDAC31AFA1C4A002C6F40 /* GKLyric.h */,
-				9D4DDAC41AFA1C4A002C6F40 /* GKLyric.m */,
-				9DEB61AC1B04A74500A763AB /* GKPlayerDefine.h */,
 			);
 			path = GKPlayer;
 			sourceTree = "<group>";
@@ -127,7 +168,9 @@
 		9D4DDA911AFA0ECC002C6F40 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				9DB0F2A61B00722400AADAB3 /* 李克勤 - 月半夜小夜曲.lrc */,
+				9D19AC261B32BE60007BB28F /* Immortals.mp3 */,
+				9D19AC281B32BE71007BB28F /* Immortals.lrc */,
+				9DB0F2A61B00722400AADAB3 /* 月半小夜曲.lrc */,
 				9DEB61A91B04827B00A763AB /* 月半小夜曲.mp3 */,
 				9D4DDA921AFA0ECC002C6F40 /* Info.plist */,
 				9D4DDA931AFA0ECC002C6F40 /* main.m */,
@@ -159,9 +202,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9D4DDAB11AFA0ECC002C6F40 /* Build configuration list for PBXNativeTarget "GKPlayer" */;
 			buildPhases = (
+				E4F925FD212524DECF0F47DC /* Check Pods Manifest.lock */,
 				9D4DDA8A1AFA0ECC002C6F40 /* Sources */,
 				9D4DDA8B1AFA0ECC002C6F40 /* Frameworks */,
 				9D4DDA8C1AFA0ECC002C6F40 /* Resources */,
+				731B47629682C62159AEAE6C /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -232,8 +277,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9DB0F2A71B00722400AADAB3 /* 李克勤 - 月半夜小夜曲.lrc in Resources */,
+				9DB0F2A71B00722400AADAB3 /* 月半小夜曲.lrc in Resources */,
+				9D19AC271B32BE60007BB28F /* Immortals.mp3 in Resources */,
 				9DEB61AA1B04827B00A763AB /* 月半小夜曲.mp3 in Resources */,
+				9D19AC291B32BE71007BB28F /* Immortals.lrc in Resources */,
 				9D4DDA9D1AFA0ECC002C6F40 /* Main.storyboard in Resources */,
 				9D4DDAA21AFA0ECC002C6F40 /* LaunchScreen.xib in Resources */,
 				9D4DDA9F1AFA0ECC002C6F40 /* Images.xcassets in Resources */,
@@ -249,16 +296,50 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		731B47629682C62159AEAE6C /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E4F925FD212524DECF0F47DC /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		9D4DDA8A1AFA0ECC002C6F40 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D4DDAB91AFA0F59002C6F40 /* GKLyricsView.m in Sources */,
 				9D4DDAC51AFA1C4A002C6F40 /* GKLyric.m in Sources */,
 				9D4DDABC1AFA1519002C6F40 /* GKLyricsTableViewCell.m in Sources */,
 				9DB0F2AA1B01D6F000AADAB3 /* GKPlayer.m in Sources */,
 				9D4DDA9A1AFA0ECC002C6F40 /* ViewController.m in Sources */,
+				9D19AC311B3411DA007BB28F /* GKSong.m in Sources */,
+				9D19AC341B34130A007BB28F /* GKPlayerManager.m in Sources */,
 				9D4DDA971AFA0ECC002C6F40 /* AppDelegate.m in Sources */,
 				9D4DDA941AFA0ECC002C6F40 /* main.m in Sources */,
 				9D4DDAC21AFA17AD002C6F40 /* GKLyricLineView.m in Sources */,
@@ -385,6 +466,7 @@
 		};
 		9D4DDAB21AFA0ECC002C6F40 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 37A66AAF0C36EEA5DED17E30 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -398,6 +480,7 @@
 		};
 		9D4DDAB31AFA0ECC002C6F40 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F099CB4D5A519F7620C011A6 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";

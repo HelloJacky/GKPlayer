@@ -7,24 +7,20 @@
 //
 
 #import "ViewController.h"
-#import "GKLyricsView.h"
-
 #import "GKPlayer.h"
 
 @interface ViewController ()
 
 @end
 
-@implementation ViewController{
-    GKLyricsView *_lyricsView;
-}
+@implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    NSString *songPath =[[NSBundle mainBundle] pathForResource:@"月半小夜曲" ofType:@"mp3"];
-    NSString *lyricsPath = [[NSBundle mainBundle] pathForResource:@"李克勤 - 月半夜小夜曲" ofType:@"lrc"];
+    NSString *songPath =[[NSBundle mainBundle] pathForResource:@"Immortals" ofType:@"mp3"];
+    NSString *lyricsPath = [[NSBundle mainBundle] pathForResource:@"Immortals" ofType:@"lrc"];
 
     GKPlayer *player = [[GKPlayer alloc] initWithFrame:self.view.frame];
     [self.view addSubview:player];

@@ -25,7 +25,8 @@
  *  @param songPath   歌曲文件
  *  @param lyricsPath 歌词文件
  */
-- (void)loadSongFile:(NSString *)songPath andLyricsFile:(NSString *)lyricsPath;
+- (void)loadSongFile:(NSString *)songPath
+       andLyricsFile:(NSString *)lyricsPath;
 
 
 @end

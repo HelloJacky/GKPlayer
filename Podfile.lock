@@ -1,0 +1,10 @@
+PODS:
+  - LBBlurredImage (0.2.2)
+
+DEPENDENCIES:
+  - LBBlurredImage
+
+SPEC CHECKSUMS:
+  LBBlurredImage: 700634c17922bc2d22343118e7deb6a3ca12db43
+
+COCOAPODS: 0.34.4
