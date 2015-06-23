@@ -10,11 +10,19 @@
 #import "GKSong.h"
 #import "GKLyric.h"
 #import "GKPlayerDefine.h"
+#import <AVFoundation/AVFoundation.h>
+
+@protocol GKPlayerDelegate <NSObject>
+
+- (void)playerDidFinishPlaying:(AVAudioPlayer *)player;
+
+@end
 
 @interface GKPlayerManager : NSObject
 
 @property (nonatomic, assign, readonly) BOOL isPlay;                //播放器是否正在运行
 @property (nonatomic, strong, readonly) GKSong *currentSong;        //当前播放的歌曲
+@property (nonatomic, weak) id<GKPlayerDelegate>delegate;           
 
 + (instancetype)sharedInstance;
 

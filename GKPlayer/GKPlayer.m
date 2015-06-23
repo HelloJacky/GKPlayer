@@ -13,7 +13,7 @@
 
 #define ControlViewHeight 120.f
 
-@interface GKPlayer() <UITableViewDelegate, UITableViewDataSource>
+@interface GKPlayer() <UITableViewDelegate, UITableViewDataSource, GKPlayerDelegate>
 
 //@property (nonatomic, strong) GKLyricsView *lyricsView;
 @property (nonatomic, strong) NSString *lyricsFile;
@@ -41,6 +41,7 @@
     if (self = [super initWithFrame:frame]) {
         [self setupViews];
         self.playerManager = [GKPlayerManager sharedInstance];
+        self.playerManager.delegate = self;
     }
     return self;
 }
@@ -122,6 +123,12 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 44.f;
+}
+
+#pragma mark -- GKPlayer Delegate Methods
+
+- (void)playerDidFinishPlaying:(AVAudioPlayer *)player{
+    self.isPlay = NO;
 }
 
 #pragma mark -- Setters And Getters
@@ -227,6 +234,7 @@
     
     return _progressSlider;
 }
+
 
 
 @end

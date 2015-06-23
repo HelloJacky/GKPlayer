@@ -7,8 +7,6 @@
 //
 
 #import "GKPlayerManager.h"
-#import <AVFoundation/AVFoundation.h>
-
 
 @interface GKPlayerManager() <AVAudioPlayerDelegate>
 
@@ -224,11 +222,13 @@
 #pragma mark -- AVAudioPlayerDelegate Methods
 
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
+    
     _isPlay = NO;
     [self stopTimer];
     self.timeCounter = 0;
     self.currentLyric = nil;
     self.currentLyricListIndex = 0;
+    [self.delegate playerDidFinishPlaying:player];
 }
 
 @end
